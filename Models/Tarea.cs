@@ -9,14 +9,14 @@ namespace ProyectoEF.Models
 {
     public class Tarea
     {
-        [Key]
+        //[Key]
         public Guid TareaId {get;set;}
 
-        [ForeignKey("CategoriaId")]
+       // [ForeignKey("CategoriaId")]
         public Guid CategoriaId {get;set;}
 
-        [Required]
-        [MaxLength(200)]
+       // [Required]
+       // [MaxLength(200)]
         public String Titulo {get;set;}
 
         public String Descripcion {get;set;}
@@ -25,10 +25,12 @@ namespace ProyectoEF.Models
 
         public DateTime FechaCreacion {get;set;}
 
+        public DateTime FechaLimite {get;set;}
+
 //RELACION CON LAS OTRAS CLASES O TABLAS EN EL MODELO - virtual
         public virtual Categoria Categoria {get;set;}
 
-        [NotMapped]
+       // [NotMapped]
         public String Resumen {get;set;}
 
     }

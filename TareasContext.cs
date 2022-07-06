@@ -14,5 +14,28 @@ namespace ProyectoEF
 
         public TareasContext(DbContextOptions<TareasContext> options): base(options){}
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder){
+            
+            List<Categoria> categoriaInit = new List<Categoria>();
+            categoriaInit.Add(new Categoria(){CategoriaId = Guid.Parse("6d4fedcf-da8d-47f7-bc96-c6f87e5a89d4"),Nombre = "Actividades pendientes",Peso = 20});
+            modelBuilder.Entity<Categoria>(categoria=>{
+                categoria.ToTable("Categoria"); // como se va allamar la tabla
+                categoria.HasKey(p => p.CategoriaId);
+                categoria.Property(p=>p.Nombre).IsRequired().HasMaxLength(150);
+                categoria.Property(p=>p.Descripcion);
+                categoria.Property(p=>p.Peso);
+            });
+
+            modelBuilder.Entity<Tarea>(tarea =>{
+                tarea.ToTable("Tarea");
+                tarea.HasKey(p=>p.TareaId);
+                tarea.HasOne(p=>p.Categoria).WithMany(p=>p.Tareas).HasForeignKey(p=>p.CategoriaId);
+                tarea.Property(p=>p.Titulo).IsRequired().HasMaxLength(200);
+                tarea.Property(p=>p.Descripcion);
+                tarea.Property(p=>p.PrioridadTarea);
+                tarea.Property(p=>p.FechaCreacion);
+                tarea.Ignore(p=>p.Resumen);
+            });
+        }
     }
 }
